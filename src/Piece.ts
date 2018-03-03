@@ -33,7 +33,6 @@ export function posToXY(pos: string): {x: number, y: number} {
 }
 
 export function xyToPos(x: number, y: number): string {
-  console.log('a'.charCodeAt(0), x)
   const letter = String.fromCharCode('a'.charCodeAt(0) + x)
   return `${letter}${y + 1}`
 }

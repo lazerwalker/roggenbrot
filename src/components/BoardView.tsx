@@ -18,15 +18,13 @@ const BoardView = (props: Props) => {
 
   const tiles = []
 
-  for (var y = size; y > 0; y--) {
+  for (var y = size - 1; y >= 0; y--) {
     for (var x = 0; x < size; x++) {
       const pos = xyToPos(x, y)
       const piece = piecesByTile[pos]
       let pieceType: PieceType|undefined
       let pieceColor: Color|undefined
-      console.log("Checking", pos)
       if (piece) {
-        console.log("Has piece!", pos)
         pieceType = piece.piece
         pieceColor = piece.color
       }
