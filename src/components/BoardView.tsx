@@ -3,7 +3,7 @@ import TileView from './TileView';
 import State from '../state';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
-import Piece, { Color, PieceType } from '../Piece';
+import Piece, { Color, PieceType, xyToPos } from '../Piece';
 
 interface Props {
   size: number
@@ -13,31 +13,27 @@ interface Props {
 const BoardView = (props: Props) => {
   const {size, pieces} = props
 
-  const piecesByTile = _.keyBy(pieces, (piece: Piece) => {
-    return `${piece.x}${piece.y}`
-  })
+  const piecesByTile = _.keyBy(pieces, 'pos')
   console.log(piecesByTile)
 
   const tiles = []
-  const startX = 'a'.charCodeAt(0)
-  const endX = startX + size
 
   for (var y = size; y > 0; y--) {
-    for (var xNum = startX; xNum < endX; xNum++) {
-      const x = String.fromCharCode(xNum)
-      const piece = piecesByTile[`${x}${y}`]
+    for (var x = 0; x < size; x++) {
+      const pos = xyToPos(x, y)
+      const piece = piecesByTile[pos]
       let pieceType: PieceType|undefined
       let pieceColor: Color|undefined
-      console.log("Checking", x, y)
+      console.log("Checking", pos)
       if (piece) {
-        console.log("Has piece!", x, y)
+        console.log("Has piece!", pos)
         pieceType = piece.piece
         pieceColor = piece.color
       }
 
       tiles.push(
         <TileView
-          key={`${x}${y}`}
+          key={pos}
           boardSize={size}
           pieceType={pieceType}
           pieceColor={pieceColor}

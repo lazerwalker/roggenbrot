@@ -15,14 +15,16 @@ const state = {
   pieces: [{
     piece: PieceType.Pawn,
     color: Color.Black,
-    x: 'a',
-    y: 3
+    x: 1,
+    y: 3,
+    pos: "b3"
   },
   {
     piece: PieceType.Rook,
     color: Color.White,
-    x: 'd',
-    y: 4
+    x: 3,
+    y: 4,
+    pos: "d4"
   }]
 }
 
