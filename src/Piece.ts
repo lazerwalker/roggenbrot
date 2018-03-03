@@ -15,6 +15,6 @@ export enum Color {
 export default interface Piece {
   piece: PieceType,
   color: Color,
-  x: number,
+  x: string,
   y: number
 }

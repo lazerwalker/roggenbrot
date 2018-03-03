@@ -6,8 +6,6 @@ interface Props {
   boardSize: number,
   pieceType?: PieceType,
   pieceColor?: Color,
-  x: number,
-  y: number,
 }
 
 const TileView = (props: Props) => {

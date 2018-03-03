@@ -14,27 +14,31 @@ const BoardView = (props: Props) => {
   const {size, pieces} = props
 
   const piecesByTile = _.keyBy(pieces, (piece: Piece) => {
-    return `${piece.y},${piece.x}`
+    return `${piece.x}${piece.y}`
   })
   console.log(piecesByTile)
 
   const tiles = []
-  for (var y = 0; y < size; y++) {
-    for (var x = 0; x < size; x++) {
-      const piece = piecesByTile[`${y},${x}`]
+  const startX = 'a'.charCodeAt(0)
+  const endX = startX + size
+
+  for (var y = size; y > 0; y--) {
+    for (var xNum = startX; xNum < endX; xNum++) {
+      const x = String.fromCharCode(xNum)
+      const piece = piecesByTile[`${x}${y}`]
       let pieceType: PieceType|undefined
       let pieceColor: Color|undefined
+      console.log("Checking", x, y)
       if (piece) {
+        console.log("Has piece!", x, y)
         pieceType = piece.piece
         pieceColor = piece.color
       }
 
       tiles.push(
         <TileView
-          key={`${y}-${x}`}
+          key={`${x}${y}`}
           boardSize={size}
-          x={x}
-          y={y}
           pieceType={pieceType}
           pieceColor={pieceColor}
         />
