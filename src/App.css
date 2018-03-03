@@ -1,5 +1,8 @@
 .tile {
+  /** Sizing happens in TileView */
   background: black;
+  font-size: 3em; /* TODO */
+  text-align: center;
 }
 
 .tile:nth-child(odd) {
@@ -15,10 +18,6 @@ html, body, #root {
   box-sizing: border-box;
   padding: 20px;
 }
-
-/* // Sizing happens within the tile itself */
-/* .tile {
-} */
 
 #board {
   border: 1px solid black;

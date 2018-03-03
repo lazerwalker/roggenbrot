@@ -1,22 +1,25 @@
 import * as React from 'react'
-import { Tile } from './Tile';
+import TileView from './TileView';
+import { Color, Piece } from '../Piece';
 
 interface Props {
   size: number
 }
 
-export const Board = (props: Props) => {
+const BoardView = (props: Props) => {
   const {size} = props
 
   const tiles = []
   for (var y = 0; y < size; y++) {
     for (var x = 0; x < size; x++) {
       tiles.push(
-        <Tile
+        <TileView
           key={`${y}-${x}`}
           boardSize={size}
           x={x}
           y={y}
+          piece={Piece.Rook}
+          pieceColor={Color.White}
         />
       )
     }
@@ -27,3 +30,5 @@ export const Board = (props: Props) => {
     </div>
   )
 }
+
+export default BoardView;
