@@ -1,17 +1,17 @@
 import * as React from 'react'
-import { Color, Piece } from '../Piece';
+import { Color, PieceType } from '../Piece';
 import { assertUnreachable } from '../helpers';
 
 interface Props {
   boardSize: number,
-  piece?: Piece,
+  pieceType?: PieceType,
   pieceColor?: Color,
   x: number,
   y: number,
 }
 
 const TileView = (props: Props) => {
-  const {boardSize, piece, pieceColor} = props
+  const {boardSize, pieceType, pieceColor} = props
 
   // TODO: Would love if I could do this in pure CSS
   const percent = (1.0 / boardSize) * 100
@@ -21,8 +21,9 @@ const TileView = (props: Props) => {
   }
 
   let pieceChar = ""
-  if (piece !== undefined && pieceColor !== undefined) {
-    pieceChar = asciiFromPiece(piece, pieceColor)
+  if (pieceType !== undefined && pieceColor !== undefined) {
+    pieceChar = asciiFromPiece(pieceType, pieceColor)
+    console.log("HAS PIECE", pieceChar)
   }
 
   return (
@@ -30,26 +31,26 @@ const TileView = (props: Props) => {
   )
 }
 
-function asciiFromPiece(piece: Piece, color: Color): string {
+function asciiFromPiece(piece: PieceType, color: Color): string {
   switch (color) {
     case Color.White:
       switch (piece) {
-        case Piece.Bishop: return '♗'
-        case Piece.Knight: return '♘'
-        case Piece.Pawn: return '♙'
-        case Piece.Queen: return '♕'
-        case Piece.Rook: return '♖'
-        case Piece.King: return '♔'
+        case PieceType.Bishop: return '♗'
+        case PieceType.Knight: return '♘'
+        case PieceType.Pawn: return '♙'
+        case PieceType.Queen: return '♕'
+        case PieceType.Rook: return '♖'
+        case PieceType.King: return '♔'
         default: return assertUnreachable(piece)
       }
     case Color.Black:
       switch (piece) {
-        case Piece.Bishop: return '♝'
-        case Piece.Knight: return '♞'
-        case Piece.Pawn: return '♟'
-        case Piece.Queen: return '♛'
-        case Piece.Rook: return '♜'
-        case Piece.King: return '♚'
+        case PieceType.Bishop: return '♝'
+        case PieceType.Knight: return '♞'
+        case PieceType.Pawn: return '♟'
+        case PieceType.Queen: return '♛'
+        case PieceType.Rook: return '♜'
+        case PieceType.King: return '♚'
         default: return assertUnreachable(piece)
       }
     default:

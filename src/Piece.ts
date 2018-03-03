@@ -1,4 +1,4 @@
-export enum Piece {
+export enum PieceType {
   Pawn,
   Knight,
   Bishop,
@@ -10,4 +10,11 @@ export enum Piece {
 export enum Color {
   Black,
   White
+}
+
+export default interface Piece {
+  piece: PieceType,
+  color: Color,
+  x: number,
+  y: number
 }

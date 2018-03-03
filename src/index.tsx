@@ -8,9 +8,22 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducer from './reducer';
 import State from './state';
+import { Color, PieceType } from './Piece';
 
 const state = {
-  size: 5
+  size: 5,
+  pieces: [{
+    piece: PieceType.Pawn,
+    color: Color.Black,
+    x: 1,
+    y: 3
+  },
+  {
+    piece: PieceType.Rook,
+    color: Color.White,
+    x: 4,
+    y: 0
+  }]
 }
 
 const store = createStore<State>(reducer, state)
