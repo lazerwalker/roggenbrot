@@ -1,6 +1,7 @@
 import * as React from 'react'
 import TileView from './TileView';
-import { Color, Piece } from '../Piece';
+import State from '../state';
+import { connect } from 'react-redux';
 
 interface Props {
   size: number
@@ -18,8 +19,6 @@ const BoardView = (props: Props) => {
           boardSize={size}
           x={x}
           y={y}
-          piece={Piece.Rook}
-          pieceColor={Color.White}
         />
       )
     }
@@ -31,4 +30,8 @@ const BoardView = (props: Props) => {
   )
 }
 
-export default BoardView;
+const mapStateToProps = (state: State, ownProps: object): Props => {
+  return { size: state.size }
+}
+
+export default connect(mapStateToProps)(BoardView);

@@ -5,7 +5,7 @@ import Board from './components/BoardView';
 class App extends React.Component {
   render() {
     return (
-      <Board size={5} />
+      <Board />
     );
   }
 }
