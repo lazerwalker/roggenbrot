@@ -1,28 +1,30 @@
-.App {
-  text-align: center;
+.tile {
+  background: black;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.tile:nth-child(odd) {
+	background: white;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  box-sizing: border-box;
   padding: 20px;
-  color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
+/* // Sizing happens within the tile itself */
+/* .tile {
+} */
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#board {
+  border: 1px solid black;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
 }
