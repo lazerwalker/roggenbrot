@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Piece, { Color, PieceType } from '../Piece';
+import Piece, { Color, PieceType, xyToPos } from '../Piece';
 import {
   ConnectDragSource,
   ConnectDropTarget,
@@ -11,20 +11,42 @@ import {
   DropTargetConnector } from 'react-dnd';
 import { asciiFromPiece } from '../helpers';
 import { DragType } from '../constants';
+import moveIsValid from '../validMoves';
 
 interface Props {
   boardSize: number,
   pieceType?: PieceType,
   pieceColor?: Color,
+  x: number,
+  y: number
 }
 
 interface DNDProps {
   connectDragSource: ConnectDragSource,
-  connectDropTarget: ConnectDropTarget
+  connectDropTarget: ConnectDropTarget,
+  canDrop: (props: Props) => boolean
+  isOver: (props: Props) => boolean
+}
+
+const renderOverlay = (color: string) => {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: '100%',
+        width: '100%',
+        zIndex: 1,
+        opacity: 0.5,
+        backgroundColor: color,
+      }}
+    />
+  )
 }
 
 const TileView = (props: Props & DNDProps) => {
-  const {boardSize, pieceType, pieceColor, connectDragSource, connectDropTarget} = props
+  const {boardSize, pieceType, pieceColor, connectDragSource, connectDropTarget, canDrop, isOver} = props
 
   // TODO: Would love if I could do this in pure CSS
   const percent = (1.0 / boardSize) * 100
@@ -38,8 +60,15 @@ const TileView = (props: Props & DNDProps) => {
     pieceChar = asciiFromPiece(pieceType, pieceColor)
   }
 
+  renderOverlay('red')
+  console.log(canDrop, isOver, props.x, props.y)
   let component = connectDropTarget(
-    <div className='tile' style={style}>{pieceChar}</div>
+    <div className='tile' style={style}>
+      {pieceChar}
+      {isOver && !canDrop && renderOverlay('red')}
+      {!isOver && canDrop && renderOverlay('yellow')}
+      {isOver && canDrop && renderOverlay('green')}
+    </div>
   )
 
   if (pieceColor !== undefined && pieceColor === Color.White) {
@@ -64,9 +93,9 @@ const pieceSource = {
     return {
       piece: props.pieceType!,
       color: props.pieceColor!,
-      pos: "A1", // TODO
-      x: 1,
-      y: 1
+      pos: xyToPos(props.x, props.y),
+      x: props.x,
+      y: props.y
     }
   }
 }
@@ -74,6 +103,13 @@ const pieceSource = {
 // DROP TARGET
 
 const tileTarget = {
+  canDrop(props: Props, monitor: DropTargetMonitor) {
+    console.log(props)
+    const item = monitor.getItem() as Piece
+    const pos = {x: props.x, y: props.y}
+    return moveIsValid(item, pos, [])
+  },
+
   drop(props: Props & DNDProps, monitor: DropTargetMonitor) {
     console.log("Drop!", props)
   }
@@ -82,6 +118,8 @@ const tileTarget = {
 function collectDrop(connect: DropTargetConnector, monitor: DropTargetMonitor) {
   return {
     connectDropTarget: connect.dropTarget(),
+    canDrop: monitor.canDrop(),
+    isOver: monitor.isOver()
   }
 }
 

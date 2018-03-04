@@ -3,6 +3,8 @@
   background: black;
   font-size: 3em; /* TODO */
   text-align: center;
+  box-sizing: border-box;
+  position: relative;
 }
 
 .tile:nth-child(odd) {

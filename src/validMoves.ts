@@ -2,13 +2,14 @@ import Piece, { PieceType } from "./Piece";
 import { assertUnreachable } from "./helpers";
 
 export default function moveIsValid(piece: Piece, position: {x: number, y: number}, board: Piece[]): boolean {
+  // console.log("Checking validity", piece, position)
   const {x, y} = piece
 
   const xDiff = Math.abs(position.x - x)
   const yDiff = Math.abs(position.y - y)
 
   const isDiagonal = () => xDiff === yDiff
-  const isLateral = () => position.x === x || position.y === y
+  const isLateral = () => xDiff === 0 || yDiff === 0
   const isSingleSpace = () => xDiff <= 1 && yDiff <= 1
 
   switch (piece.piece) {

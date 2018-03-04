@@ -16,8 +16,8 @@ const state = {
     piece: PieceType.Pawn,
     color: Color.Black,
     x: 2,
-    y: 1,
-    pos: "b2"
+    y: 5,
+    pos: "b4"
   },
   {
     piece: PieceType.Rook,

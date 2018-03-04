@@ -35,6 +35,8 @@ const BoardView = (props: Props) => {
           boardSize={size}
           pieceType={pieceType}
           pieceColor={pieceColor}
+          x={x}
+          y={y}
         />
       )
     }
