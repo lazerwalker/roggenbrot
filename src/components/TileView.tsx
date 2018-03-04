@@ -18,7 +18,8 @@ interface Props {
   pieceType?: PieceType,
   pieceColor?: Color,
   x: number,
-  y: number
+  y: number,
+  onDrag: (piece: Piece, pos: {x: number, y: number}) => void
 }
 
 interface DNDProps {
@@ -60,8 +61,6 @@ const TileView = (props: Props & DNDProps) => {
     pieceChar = asciiFromPiece(pieceType, pieceColor)
   }
 
-  renderOverlay('red')
-  console.log(canDrop, isOver, props.x, props.y)
   let component = connectDropTarget(
     <div className='tile' style={style}>
       {pieceChar}
@@ -104,14 +103,15 @@ const pieceSource = {
 
 const tileTarget = {
   canDrop(props: Props, monitor: DropTargetMonitor) {
-    console.log(props)
     const item = monitor.getItem() as Piece
     const pos = {x: props.x, y: props.y}
     return moveIsValid(item, pos, [])
   },
 
   drop(props: Props & DNDProps, monitor: DropTargetMonitor) {
-    console.log("Drop!", props)
+    const item = monitor.getItem() as Piece
+    const pos = {x: props.x, y: props.y}
+    props.onDrag(item, pos)
   }
 }
 
