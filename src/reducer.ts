@@ -16,18 +16,7 @@ export default function(state: State, action: Action): State {
 
       return newState
     case ActionType.NewGame:
-      const {size} = state
-      const pieces = []
-      pieces.push(randomPiece(Color.White, state.size, []))
-      pieces.push(randomPiece(Color.Black, state.size, pieces, true))
-      for (var i = 0; i < 4; i++) {
-        pieces.push(randomPiece(Color.Black, state.size, pieces))
-      }
-
-      return {
-        size,
-        pieces
-      }
+      return generateBoard(state)
     default:
       return state
   }
@@ -64,6 +53,33 @@ function randomPiece(color: Color, size: number, pieces: Piece[], forceKing: boo
   }
 }
 
+function generateBoard(state: State): State {
+  const {size} = state
+
+  const pieces = []
+
+  if (state.pieces.length > 0) {
+    const player = state.pieces.find((p) => p.color === Color.White)
+    if (player) {
+      pieces.push(player)
+    } else {
+      pieces.push(randomPiece(Color.White, state.size, []))
+    }
+  } else {
+    pieces.push(randomPiece(Color.White, state.size, []))
+  }
+
+  pieces.push(randomPiece(Color.Black, state.size, pieces, true))
+  for (var i = 0; i < 4; i++) {
+    pieces.push(randomPiece(Color.Black, state.size, pieces))
+  }
+
+  return {
+    size,
+    pieces
+  }
+}
+
 function move(state: State, piece: Piece, to: {x: number, y: number}): State {
   let newPieces: Piece[] = _.filter(state.pieces, (p) => p.pos !== piece.pos)
 
@@ -81,7 +97,13 @@ function move(state: State, piece: Piece, to: {x: number, y: number}): State {
 
   newPieces.push(newPiece)
 
-  return {...state, pieces: newPieces}
+  const newState = {...state, pieces: newPieces}
+
+  if (capturedPiece && newPiece.piece === PieceType.King) {
+    return generateBoard(newState)
+  } else {
+    return newState
+  }
 }
 
 function moveEnemy(state: State, enemy: Piece): State {
