@@ -18,7 +18,8 @@ class App extends React.Component<{}, State> {
 
     this.state = {
       size: 5,
-      pieces: []
+      pieces: [],
+      isNewRound: false
     }
 
     this.drag = this.drag.bind(this) // lol TS + React

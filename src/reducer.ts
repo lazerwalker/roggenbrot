@@ -8,15 +8,20 @@ export default function(state: State, action: Action): State {
   switch (action.type) {
     case ActionType.Move:
       let newState = move(state, action.value.piece, action.value.to)
-      const enemies = _.filter(newState.pieces, (p) => p.color === Color.Black)
 
-      for (var e of enemies) {
-        newState = moveEnemy(newState, e)
+      if (!newState.isNewRound) {
+        const enemies = _.filter(newState.pieces, (p) => p.color === Color.Black)
+
+        for (var e of enemies) {
+          newState = moveEnemy(newState, e)
+        }
       }
+
+      newState.isNewRound = false
 
       return newState
     case ActionType.NewGame:
-      return generateBoard(state)
+      return generateBoard(state, false)
     default:
       return state
   }
@@ -53,7 +58,7 @@ function randomPiece(color: Color, size: number, pieces: Piece[], forceKing: boo
   }
 }
 
-function generateBoard(state: State): State {
+function generateBoard(state: State, triggerNewRound: boolean = true): State {
   const {size} = state
 
   const pieces = []
@@ -76,7 +81,8 @@ function generateBoard(state: State): State {
 
   return {
     size,
-    pieces
+    pieces,
+    isNewRound: triggerNewRound
   }
 }
 
