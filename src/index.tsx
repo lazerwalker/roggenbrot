@@ -25,6 +25,13 @@ const state = {
     x: 4,
     y: 3,
     pos: "d2"
+  },
+  {
+    piece: PieceType.Bishop,
+    color: Color.Black,
+    x: 0,
+    y: 1,
+    pos: "a2"
   }]
 }
 

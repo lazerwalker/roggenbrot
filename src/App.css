@@ -1,6 +1,6 @@
 .tile {
   /** Sizing happens in TileView */
-  background: black;
+  background: #bbb;
   font-size: 3em; /* TODO */
   text-align: center;
   box-sizing: border-box;
@@ -8,6 +8,7 @@
 }
 
 .tile:nth-child(odd) {
+  color: black;
 	background: white;
 }
 
