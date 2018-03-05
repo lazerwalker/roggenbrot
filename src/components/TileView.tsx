@@ -11,7 +11,7 @@ import {
   DropTargetConnector } from 'react-dnd';
 import { asciiFromPiece } from '../helpers';
 import { DragType } from '../constants';
-import moveIsValid from '../validMoves';
+import { moveIsValid } from '../validMoves';
 
 interface Props {
   boardSize: number,

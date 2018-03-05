@@ -1,4 +1,4 @@
-import moveIsValid from './validMoves'
+import { moveIsValid } from './validMoves'
 import Piece, { PieceType, Color } from './Piece';
 import * as _ from 'lodash';
 

@@ -1,8 +1,22 @@
 import Piece, { PieceType } from "./Piece";
 import { assertUnreachable } from "./helpers";
 import * as _ from "lodash";
+import State from "./state";
 
-export default function moveIsValid(piece: Piece, to: {x: number, y: number}, board: Piece[]): boolean {
+export function validMoves(piece: Piece, board: State): {x: number, y: number}[] {
+  let result = []
+  for (let y = board.size - 1; y >= 0; y--) {
+    for (let x = 0; x < board.size; x++) {
+      if (moveIsValid(piece, {x, y}, board.pieces)) {
+        result.push({x, y})
+      }
+    }
+  }
+
+  return result
+}
+
+export function moveIsValid(piece: Piece, to: {x: number, y: number}, board: Piece[]): boolean {
   const {x, y} = piece
 
   const xDiff = Math.abs(to.x - x)
