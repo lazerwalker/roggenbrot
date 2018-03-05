@@ -31,12 +31,14 @@ function movesMatch(piece: Piece, board: string, pieces: Piece[] = []): boolean 
   return _.isEqual(expectedArray, actualArray)
 }
 
-function checkWholeBoard(piece: Piece, size: number = 4, pieces: Piece[] = []): boolean[] {
+function checkWholeBoard(piece: Piece, size: number = 5, pieces: Piece[] = []): boolean[] {
   const result = []
+
+  const state = {size, pieces}
 
   for (var y = size - 1; y >= 0; y--) {
     for (var x = 0; x < size; x++) {
-      result.push(moveIsValid(piece, {x, y}, pieces))
+      result.push(moveIsValid(piece, {x, y}, state))
     }
   }
 

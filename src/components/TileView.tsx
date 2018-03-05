@@ -107,7 +107,11 @@ const tileTarget = {
     const item = monitor.getItem() as Piece
     const pos = {x: props.x, y: props.y}
     // TODO: lol
-    return moveIsValid(item, pos, props.pieces)
+    const fakeState = {
+      size: props.boardSize,
+      pieces: props.pieces
+    }
+    return moveIsValid(item, pos, fakeState)
   },
 
   drop(props: Props & DNDProps, monitor: DropTargetMonitor) {

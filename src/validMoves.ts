@@ -1,13 +1,12 @@
-import Piece, { PieceType } from "./Piece";
+import Piece, { PieceType, Position } from "./Piece";
 import { assertUnreachable } from "./helpers";
-import * as _ from "lodash";
 import State from "./state";
 
 export function validMoves(piece: Piece, board: State): {x: number, y: number}[] {
   let result = []
   for (let y = board.size - 1; y >= 0; y--) {
     for (let x = 0; x < board.size; x++) {
-      if (moveIsValid(piece, {x, y}, board.pieces)) {
+      if (moveIsValid(piece, {x, y}, board)) {
         result.push({x, y})
       }
     }
@@ -16,8 +15,34 @@ export function validMoves(piece: Piece, board: State): {x: number, y: number}[]
   return result
 }
 
-export function moveIsValid(piece: Piece, to: {x: number, y: number}, board: Piece[]): boolean {
+export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
   const {x, y} = piece
+
+  enum Square {
+    Empty = 0,
+    Friend,
+    Foe
+  }
+
+  const g: Square[][] = []
+  for (var i = 0; i < board.size; i++) {
+    var row = []
+    for (var j = 0; j < board.size; j++) {
+      row.push(Square.Empty)
+    }
+    g.push(row)
+  }
+
+  board.pieces.forEach((p) => {
+    if (p.color === piece.color) {
+      g[p.y][p.x] = Square.Friend
+    } else {
+      g[p.y][p.x] = Square.Foe
+    }
+  })
+  function grid(pos: Position) {
+    return g[pos.y][pos.x]
+  }
 
   const xDiff = Math.abs(to.x - x)
   const yDiff = Math.abs(to.y - y)
@@ -29,31 +54,19 @@ export function moveIsValid(piece: Piece, to: {x: number, y: number}, board: Pie
 
   // Can't capture your own pieces
   if (!isSelf) {
-    const friendlyPiece = _.find(board, (p) => {
-      return p.x === to.x
-        && p.y === to.y
-        && p.color === piece.color
-    })
-
-    if (!_.isUndefined(friendlyPiece)) {
+    if (grid(to) === Square.Friend) {
       return false
     }
   }
-
-  const enemy = _.find(board, (p) => {
-    return p.x === to.x
-      && p.y === to.y
-      && p.color !== piece.color
-  })
 
   if (isSelf) { return true }
 
   switch (piece.piece) {
     case PieceType.Pawn:
       if (isLateral && isSingleSpace) {
-        return _.isUndefined(enemy)
+        return grid(to) === Square.Empty
       } else if (isDiagonal && isSingleSpace) {
-        return !_.isUndefined(enemy)
+        return grid(to) !== Square.Empty
       } else {
         return false
       }
