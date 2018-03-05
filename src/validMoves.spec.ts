@@ -59,12 +59,20 @@ describe("moveIsValid", () => {
     it("should allow only valid moves", () => {
       const expected = `
         01000
-        11111
+        11101
         01000
         01000
         01000
       `
-      expect(movesMatch(piece, expected)).toBeTruthy()
+      const ownPiece = {
+        piece: PieceType.Bishop,
+        color: Color.White,
+        pos: "D4",
+        x: 3,
+        y: 3
+      }
+
+      expect(movesMatch(piece, expected, [ownPiece])).toBeTruthy()
     })
   })
 
@@ -186,6 +194,36 @@ describe("moveIsValid", () => {
           00000
         `
         expect(movesMatch(piece, expected)).toBeTruthy()
+      })
+    })
+
+    describe("when there is a piece blocking the way", () => {
+      it("should not be able to move to those spaces", () => {
+        const expected = `
+          00000
+          00000
+          11100
+          00000
+          00000
+        `
+
+        const enemyPiece = {
+          piece: PieceType.Rook,
+          color: Color.Black,
+          pos: "B4",
+          x: 1,
+          y: 3
+        }
+
+        const ownPiece = {
+          piece: PieceType.Bishop,
+          color: Color.White,
+          pos: "B2",
+          x: 1,
+          y: 1
+        }
+
+        expect(movesMatch(piece, expected, [enemyPiece, ownPiece])).toBeTruthy()
       })
     })
 
