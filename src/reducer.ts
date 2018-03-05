@@ -17,8 +17,10 @@ export default function(state: State, action: Action): State {
       return newState
     case ActionType.NewGame:
       const {size} = state
-      const pieces = [randomPiece(Color.White, state.size, [])]
-      for (var i = 0; i < 5; i++) {
+      const pieces = []
+      pieces.push(randomPiece(Color.White, state.size, []))
+      pieces.push(randomPiece(Color.Black, state.size, pieces, true))
+      for (var i = 0; i < 4; i++) {
         pieces.push(randomPiece(Color.Black, state.size, pieces))
       }
 
@@ -31,7 +33,7 @@ export default function(state: State, action: Action): State {
   }
 }
 
-function randomPiece(color: Color, size: number, pieces: Piece[]): Piece {
+function randomPiece(color: Color, size: number, pieces: Piece[], forceKing: boolean = false): Piece {
   const allPositions = []
   for (var i = 0; i < size; i++) {
     for (var j = 0; j < size; j++) {
@@ -44,9 +46,18 @@ function randomPiece(color: Color, size: number, pieces: Piece[]): Piece {
   const positions = _.difference(allPositions, usedPositions)
   const position = _.sample(positions)!
 
+  let pieceType: PieceType
+  if (forceKing) {
+    pieceType = PieceType.King
+  } else {
+    do {
+      pieceType = _.sample(PieceType) as PieceType
+    } while (pieceType === PieceType.King)
+  }
+
   return {
     color,
-    piece: _.sample(PieceType) as PieceType,
+    piece: pieceType,
     x: position.x,
     y: position.y,
     pos: xyToPos(position.x, position.y)
