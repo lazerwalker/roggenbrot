@@ -4,7 +4,7 @@ import Board from './components/BoardView';
 import { DragDropContext } from 'react-dnd';
 import State from './state';
 import Piece from './Piece';
-import { moveAction } from './actionCreators';
+import { moveAction, newGameAction } from './actionCreators';
 
 import MultiBackend from 'react-dnd-multi-backend'
 // tslint:disable-next-line:no-submodule-imports
@@ -20,6 +20,10 @@ class App extends React.Component<{}, State> {
       size: 5,
       pieces: []
     }
+
+    this.drag = this.drag.bind(this) // lol TS + React
+
+    setTimeout((() => this.dispatch(newGameAction())), 0)
   }
   drag(piece: Piece, pos: {x: number, y: number}) {
     this.dispatch(moveAction(piece, pos))

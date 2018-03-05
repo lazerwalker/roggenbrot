@@ -1,7 +1,7 @@
 import State from "./state";
 import { Action, ActionType } from "./action";
 import * as _ from "lodash";
-import Piece, { xyToPos, Color } from './Piece';
+import Piece, { xyToPos, Color, PieceType } from './Piece';
 import { validMoves } from "./validMoves";
 
 export default function(state: State, action: Action): State {
@@ -15,8 +15,41 @@ export default function(state: State, action: Action): State {
       }
 
       return newState
+    case ActionType.NewGame:
+      const {size} = state
+      const pieces = [randomPiece(Color.White, state.size, [])]
+      for (var i = 0; i < 5; i++) {
+        pieces.push(randomPiece(Color.Black, state.size, pieces))
+      }
+
+      return {
+        size,
+        pieces
+      }
     default:
       return state
+  }
+}
+
+function randomPiece(color: Color, size: number, pieces: Piece[]): Piece {
+  const allPositions = []
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      allPositions.push({x: i, y: j})
+    }
+  }
+
+  const usedPositions = pieces.map((p) => { return { x: p.x, y: p.y } })
+
+  const positions = _.difference(allPositions, usedPositions)
+  const position = _.sample(positions)!
+
+  return {
+    color,
+    piece: _.sample(PieceType) as PieceType,
+    x: position.x,
+    y: position.y,
+    pos: xyToPos(position.x, position.y)
   }
 }
 

@@ -1,7 +1,8 @@
 import Piece from "./Piece";
 
 export enum ActionType {
-  Move = "MOVE"
+  Move = "MOVE",
+  NewGame = "NEW_GAME"
 }
 
 export interface MoveAction {
@@ -12,4 +13,8 @@ export interface MoveAction {
   }
 }
 
-export type Action = MoveAction
+export interface NewGameAction {
+  type: ActionType.NewGame
+}
+
+export type Action = MoveAction | NewGameAction

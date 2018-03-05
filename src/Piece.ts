@@ -1,15 +1,20 @@
 export enum PieceType {
-  Pawn,
-  Knight,
-  Bishop,
-  Queen,
-  King,
-  Rook
+  Pawn = "pawn",
+  Knight = "knight",
+  Bishop = "bishop",
+  Queen = "queen",
+  King = "king",
+  Rook = "rook"
 }
 
 export enum Color {
   Black,
   White
+}
+
+export interface Position {
+  x: number,
+  y: number
 }
 
 export default interface Piece {
