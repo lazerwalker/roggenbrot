@@ -40,6 +40,7 @@ const BoardView = (props: Props & DispatchProps) => {
           boardSize={size}
           pieceType={pieceType}
           pieceColor={pieceColor}
+          pieces={pieces}
           x={x}
           y={y}
           onDrag={onDrag}

@@ -15,6 +15,7 @@ import { moveIsValid } from '../validMoves';
 
 interface Props {
   boardSize: number,
+  pieces: Piece[]
   pieceType?: PieceType,
   pieceColor?: Color,
   x: number,
@@ -105,7 +106,8 @@ const tileTarget = {
   canDrop(props: Props, monitor: DropTargetMonitor) {
     const item = monitor.getItem() as Piece
     const pos = {x: props.x, y: props.y}
-    return moveIsValid(item, pos, [])
+    // TODO: lol
+    return moveIsValid(item, pos, props.pieces)
   },
 
   drop(props: Props & DNDProps, monitor: DropTargetMonitor) {
