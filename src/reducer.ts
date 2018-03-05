@@ -37,14 +37,14 @@ function randomPiece(color: Color, size: number, pieces: Piece[], forceKing: boo
   const allPositions = []
   for (var i = 0; i < size; i++) {
     for (var j = 0; j < size; j++) {
-      allPositions.push({x: i, y: j})
+      allPositions.push([i, j])
     }
   }
 
-  const usedPositions = pieces.map((p) => { return { x: p.x, y: p.y } })
+  const usedPositions = pieces.map((p) => [p.x, p.y])
 
-  const positions = _.difference(allPositions, usedPositions)
-  const position = _.sample(positions)!
+  const positions = _.differenceWith(allPositions, usedPositions, _.isEqual)
+  const [x, y] = _.sample(positions)!
 
   let pieceType: PieceType
   if (forceKing) {
@@ -58,9 +58,9 @@ function randomPiece(color: Color, size: number, pieces: Piece[], forceKing: boo
   return {
     color,
     piece: pieceType,
-    x: position.x,
-    y: position.y,
-    pos: xyToPos(position.x, position.y)
+    x,
+    y,
+    pos: xyToPos(x, y)
   }
 }
 
