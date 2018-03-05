@@ -1,19 +1,22 @@
 import State from "./state";
 import { Action, ActionType } from "./action";
 import * as _ from "lodash";
-import Piece, { xyToPos, Color, PieceType } from './Piece';
+import Piece, { xyToPos, Color, PieceType, Position } from './Piece';
 import { validMoves } from "./validMoves";
 
 export default function(state: State, action: Action): State {
   switch (action.type) {
     case ActionType.Move:
       let newState = move(state, action.value.piece, action.value.to)
-
       if (!newState.isNewRound) {
         const enemies = _.filter(newState.pieces, (p) => p.color === Color.Black)
 
         for (var e of enemies) {
-          newState = moveEnemy(newState, e)
+          const to = calculateEnemyMove(newState, e)
+          if (to) {
+            // TODO: Check lose state
+            newState = move(newState, e, to)
+          }
         }
       }
 
@@ -112,13 +115,14 @@ function move(state: State, piece: Piece, to: {x: number, y: number}): State {
   }
 }
 
-function moveEnemy(state: State, enemy: Piece): State {
+function calculateEnemyMove(state: State, enemy: Piece): Position|undefined {
   const possibleMoves = validMoves(enemy, state)
-  const to = _.sample(possibleMoves)
+  const player = state.pieces.find((p) => p.color === Color.White)
+  if (!player) { return }
 
-  if (to) {
-    return move(state, enemy, to)
-  }
+  const sorted = _.sortBy(possibleMoves, (pos) => {
+    return Math.abs(pos.x - player.x) + Math.abs(pos.y - player.y)
+  })
 
-  return state
+  return sorted[0]
 }
