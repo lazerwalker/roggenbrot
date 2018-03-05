@@ -18,12 +18,12 @@ function boolToString(input: boolean[]) {
   }
   return result
 }
-function movesMatch(piece: Piece, board: string): boolean {
+function movesMatch(piece: Piece, board: string, pieces: Piece[] = []): boolean {
   const expectedArray: boolean[] = board.replace(/\s/g, '')
     .split('')
     .map((m) => !!parseInt(m, 10))
 
-  const actualArray = checkWholeBoard(piece, Math.sqrt(expectedArray.length), [])
+  const actualArray = checkWholeBoard(piece, Math.sqrt(expectedArray.length), pieces)
 
   return _.isEqual(expectedArray, actualArray)
 }
@@ -173,15 +173,39 @@ describe("moveIsValid", () => {
       }
     })
 
-    it("should only allow valid moves", () => {
-      const expected = `
-        00000
-        01000
-        11100
-        01000
-        00000
-      `
-      expect(movesMatch(piece, expected)).toBeTruthy()
+    describe("when there are no pieces to capture", () => {
+      it("should only allow valid moves", () => {
+        const expected = `
+          00000
+          01000
+          11100
+          01000
+          00000
+        `
+        expect(movesMatch(piece, expected)).toBeTruthy()
+      })
+    })
+
+    describe("when there is a black piece to capture", () => {
+      it("should include the capture move", () => {
+        const expected = `
+          00000
+          01100
+          11100
+          01000
+          00000
+        `
+
+        const capturePiece = {
+          piece: PieceType.Rook,
+          color: Color.Black,
+          pos: "C4",
+          x: 2,
+          y: 3
+        }
+
+        expect(movesMatch(piece, expected, [capturePiece])).toBeTruthy()
+      })
     })
   })
 })
