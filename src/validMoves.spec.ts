@@ -61,7 +61,7 @@ describe("moveIsValid", () => {
     it("should allow only valid moves", () => {
       const expected = `
         01000
-        11101
+        11100
         01000
         01000
         01000
@@ -93,12 +93,20 @@ describe("moveIsValid", () => {
     it("should only allow valid moves", () => {
       const expected = `
         00000
-        10001
+        00001
         01010
         00100
         01010
       `
-      expect(movesMatch(piece, expected)).toBeTruthy()
+      const enemyPiece = {
+        piece: PieceType.Rook,
+        color: Color.Black,
+        pos: "B3",
+        x: 1,
+        y: 2
+      }
+
+      expect(movesMatch(piece, expected, [enemyPiece])).toBeTruthy()
     })
   })
 
@@ -139,14 +147,31 @@ describe("moveIsValid", () => {
     })
 
     it("should only allow valid moves", () => {
+      const enemyPiece = {
+        piece: PieceType.Rook,
+        color: Color.Black,
+        pos: "C2",
+        x: 2,
+        y: 1
+      }
+
+      const ownPiece = {
+        piece: PieceType.Bishop,
+        color: Color.White,
+        pos: "D3",
+        x: 3,
+        y: 2
+      }
+
       const expected = `
         01010
         11100
-        11111
         11100
-        01010
+        11100
+        01000
       `
-      expect(movesMatch(piece, expected)).toBeTruthy()
+
+      expect(movesMatch(piece, expected, [enemyPiece, ownPiece])).toBeTruthy()
     })
   })
 

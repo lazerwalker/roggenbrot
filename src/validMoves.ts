@@ -25,9 +25,9 @@ export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
   }
 
   const g: Square[][] = []
-  for (var i = 0; i < board.size; i++) {
-    var row = []
-    for (var j = 0; j < board.size; j++) {
+  for (let i = 0; i < board.size; i++) {
+    const row = []
+    for (let j = 0; j < board.size; j++) {
       row.push(Square.Empty)
     }
     g.push(row)
@@ -52,6 +52,41 @@ export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
   const isLateral = (xDiff === 0 || yDiff === 0)
   const isSingleSpace = (xDiff <= 1 && yDiff <= 1)
 
+  // TODO: There isn't as much test coverage for this or hasDiagonalLineOfSight as I'd like
+  const hasLateralLineOfSight = () => {
+    if (yDiff === 0) {
+      for (let i = Math.min(piece.x, to.x) + 1; i <= Math.max(piece.x, to.x); i++) {
+        if (i === piece.x || i === to.x) { continue }
+        if (grid({x: i, y: piece.y}) !== Square.Empty) {
+          return false
+        }
+      }
+    } else if (xDiff === 0) {
+      for (let i = Math.min(piece.y, to.y) + 1; i <= Math.max(piece.y, to.y); i++) {
+        if (i === piece.y || i === to.y) { continue }
+        if (grid({x: piece.x, y: i}) !== Square.Empty) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+  const hasDiagonalLineOfSight = () => {
+    for (let i = Math.min(piece.y, to.y) + 1; i <= Math.max(piece.y, to.y); i++) {
+      if (i === piece.y || i === to.y) { continue }
+
+      for (let j = Math.min(piece.x, to.x) + 1; j <= Math.max(piece.x, to.x); j++) {
+        if (j === piece.x || j === to.x) { continue }
+
+        if (grid({x: j, y: i}) !== Square.Empty) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   // Can't capture your own pieces
   if (!isSelf) {
     if (grid(to) === Square.Friend) {
@@ -71,14 +106,15 @@ export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
         return false
       }
     case PieceType.Bishop:
-      return isDiagonal
+      return isDiagonal && hasDiagonalLineOfSight()
     case PieceType.Rook:
-      return isLateral
+      return isLateral && hasLateralLineOfSight()
     case PieceType.Knight:
       return (xDiff === 1 && yDiff === 2) ||
              (xDiff === 2 && yDiff === 1)
     case PieceType.Queen:
-      return isDiagonal || isLateral
+      return (isDiagonal && hasDiagonalLineOfSight())
+        || (isLateral && hasLateralLineOfSight())
     case PieceType.King:
       return isSingleSpace
     default:
