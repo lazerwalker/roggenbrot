@@ -8,13 +8,15 @@ export default function(state: State, action: Action): State {
     case ActionType.Move:
       const {piece, to} = action.value
 
-      console.log("In reducer", action.value)
       const newPieces = _.filter(state.pieces, (p) => p.pos !== piece.pos)
+
+      const capturedPiece = _.find(state.pieces, (p) => p.x === to.x && p.y === to.y)
 
       const newPiece = {...piece,
         x: to.x,
         y: to.y,
-        pos: xyToPos(to.x, to.y)
+        pos: xyToPos(to.x, to.y),
+        piece: (capturedPiece ? capturedPiece.piece : piece.piece)
       }
 
       newPieces.push(newPiece)
