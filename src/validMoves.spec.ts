@@ -18,12 +18,15 @@ function boolToString(input: boolean[]) {
   }
   return result
 }
+
 function movesMatch(piece: Piece, board: string, pieces: Piece[] = []): boolean {
   const expectedArray: boolean[] = board.replace(/\s/g, '')
     .split('')
     .map((m) => !!parseInt(m, 10))
 
   const actualArray = checkWholeBoard(piece, Math.sqrt(expectedArray.length), pieces)
+
+  boolToString(actualArray)
 
   return _.isEqual(expectedArray, actualArray)
 }

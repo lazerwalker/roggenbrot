@@ -3,7 +3,6 @@ import { assertUnreachable } from "./helpers";
 import * as _ from "lodash";
 
 export default function moveIsValid(piece: Piece, to: {x: number, y: number}, board: Piece[]): boolean {
-  // console.log("Checking validity", piece, position)
   const {x, y} = piece
 
   const xDiff = Math.abs(to.x - x)
