@@ -7,6 +7,10 @@ import { validMoves } from "./validMoves";
 export default function(state: State, action: Action): State {
   switch (action.type) {
     case ActionType.Move:
+      if (action.value.piece.x === action.value.to.x && action.value.piece.y === action.value.to.y) {
+        return state
+      }
+
       let newState = move(state, action.value.piece, action.value.to)
       if (!newState.isNewRound) {
         const enemies = _.filter(newState.pieces, (p) => p.color === Color.Black)
