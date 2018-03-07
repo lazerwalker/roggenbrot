@@ -40,6 +40,11 @@ class App extends React.Component<{}, State> {
   }
 
   render() {
+    // TODO: lol
+    if (this.state.gameIsOver) {
+      setTimeout(() => { alert("You have lost!") }, 0)
+    }
+
     return (
       <Board
         onDrag={this.drag}

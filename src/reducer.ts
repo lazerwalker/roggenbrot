@@ -31,7 +31,6 @@ export default function(state: State, action: Action): State {
     case ActionType.NewGame:
       return generateBoard(state, false)
     case ActionType.AnimationTick:
-      console.log("Animation tick!")
       return animationTick(state)
     default:
       return state

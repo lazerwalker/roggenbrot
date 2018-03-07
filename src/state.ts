@@ -6,6 +6,7 @@ export default interface State {
   pieces: Piece[]
   isNewRound?: boolean
   animationSpeed: number // tick time in ms
+  gameIsOver?: boolean
 }
 
 export function isAnimating(state: State): boolean {
