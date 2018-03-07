@@ -13,6 +13,7 @@ interface DispatchProps {
 }
 
 export default (props: Props & DispatchProps) => {
+  console.log("Rerendering board!")
   const {size, pieces, onDrag} = props
 
   const piecesByTile = _.keyBy(pieces, 'pos')

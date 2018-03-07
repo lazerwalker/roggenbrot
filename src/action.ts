@@ -2,7 +2,8 @@ import Piece from "./Piece";
 
 export enum ActionType {
   Move = "MOVE",
-  NewGame = "NEW_GAME"
+  NewGame = "NEW_GAME",
+  AnimationTick = "ANIMATION_TICK"
 }
 
 export interface MoveAction {
@@ -13,8 +14,8 @@ export interface MoveAction {
   }
 }
 
-export interface NewGameAction {
-  type: ActionType.NewGame
+export interface GenericAction {
+  type: ActionType
 }
 
-export type Action = MoveAction | NewGameAction
+export type Action = MoveAction | GenericAction

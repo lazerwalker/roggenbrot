@@ -2,9 +2,9 @@ import * as React from 'react';
 import './App.css';
 import Board from './components/BoardView';
 import { DragDropContext } from 'react-dnd';
-import State from './state';
+import State, { isAnimating } from './state';
 import Piece from './Piece';
-import { moveAction, newGameAction } from './actionCreators';
+import { moveAction, newGameAction, animationTickAction } from './actionCreators';
 
 import MultiBackend from 'react-dnd-multi-backend'
 // tslint:disable-next-line:no-submodule-imports
@@ -19,7 +19,8 @@ class App extends React.Component<{}, State> {
     this.state = {
       size: 5,
       pieces: [],
-      isNewRound: false
+      isNewRound: false,
+      animationSpeed: 200
     }
 
     this.drag = this.drag.bind(this) // lol TS + React
@@ -33,6 +34,9 @@ class App extends React.Component<{}, State> {
   dispatch(action: Action) {
     const newState = reducer(this.state, action)
     this.setState(newState)
+    if (isAnimating(newState)) {
+      setTimeout(() => { this.dispatch(animationTickAction()) }, newState.animationSpeed)
+    }
   }
 
   render() {

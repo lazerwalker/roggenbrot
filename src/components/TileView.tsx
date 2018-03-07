@@ -109,7 +109,8 @@ const tileTarget = {
     // TODO: lol
     const fakeState = {
       size: props.boardSize,
-      pieces: props.pieces
+      pieces: props.pieces,
+      animationSpeed: 200
     }
     return moveIsValid(item, pos, fakeState)
   },

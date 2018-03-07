@@ -24,6 +24,7 @@ export default function generateBoard(state: State, triggerNewRound: boolean = t
   }
 
   return {
+    ...state,
     size,
     pieces,
     isNewRound: triggerNewRound

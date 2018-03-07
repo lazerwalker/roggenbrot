@@ -34,7 +34,7 @@ function movesMatch(piece: Piece, board: string, pieces: Piece[] = []): boolean 
 function checkWholeBoard(piece: Piece, size: number = 5, pieces: Piece[] = []): boolean[] {
   const result = []
 
-  const state = {size, pieces}
+  const state = {size, pieces, animationSpeed: 200}
 
   for (var y = size - 1; y >= 0; y--) {
     for (var x = 0; x < size; x++) {
