@@ -20,7 +20,7 @@ class App extends React.Component<{}, State> {
       size: 5,
       pieces: [],
       isNewRound: false,
-      animationSpeed: 200
+      animationSpeed: 300
     }
 
     this.drag = this.drag.bind(this) // lol TS + React
