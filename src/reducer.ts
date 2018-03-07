@@ -16,15 +16,13 @@ export default function(state: State, action: Action): State {
 
       let newState = move(state, piece, to)
       if (!newState.isNewRound) {
-        newState.pieces = newState.pieces.map((p) => {
-          // TODO: This doesn't factor in destinations we've just locked in
-          if (p.color === Color.White) { return p }
+        for (var p of newState.pieces) {
+          if (p.color === Color.White) { continue }
           const destination = calculateEnemyMove(newState, p)
           if (destination) {
             p.destination = destination
           }
-          return p
-        })
+        }
       }
 
       newState.isNewRound = false

@@ -34,10 +34,13 @@ export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
   }
 
   board.pieces.forEach((p) => {
+    let px = (p.destination ? p.destination.x : p.x)
+    let py = (p.destination ? p.destination.y : p.y)
+
     if (p.color === piece.color) {
-      g[p.y][p.x] = Square.Friend
+      g[py][px] = Square.Friend
     } else {
-      g[p.y][p.x] = Square.Foe
+      g[py][px] = Square.Foe
     }
   })
   function grid(pos: Position) {
