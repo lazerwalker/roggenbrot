@@ -19,10 +19,20 @@ export default function calculateEnemyMove(state: State, enemy: Piece): Position
   }
 
   const strategy: Strategy = strategyMap[enemy.piece]
-
-  if (enemy.piece === PieceType.Rook) { console.log(enemy)}
   const possibleMoves = validMoves(enemy, state)
+
+  const win = winningMove(possibleMoves, player)
+  if (win) {
+    console.log("Returning win", win)
+    return win
+  }
+
   return strategy(possibleMoves, enemy, state)
+}
+
+function winningMove(possibleMoves: Position[], player: Piece): Position|undefined {
+  const result = possibleMoves.filter((m) => m.x === player.x && m.y === player.y)
+  return (result.length > 0 ? result[0] : undefined)
 }
 
 function randomMove(possibleMoves: Position[], player: Piece): Position {
