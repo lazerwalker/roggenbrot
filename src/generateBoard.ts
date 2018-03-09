@@ -1,8 +1,18 @@
 import State from "./state";
 import { Color } from "./Piece";
 import randomPiece from "./randomPiece";
+import { playerCanMove } from "./validMoves";
 
 export default function generateBoard(state: State, triggerNewRound: boolean = true): State {
+  let newState = state
+  do {
+    newState = generateRawBoard(state, triggerNewRound)
+  } while (!playerCanMove(newState))
+
+  return newState
+}
+
+function generateRawBoard(state: State, triggerNewRound: boolean): State {
   const {size} = state
 
   const pieces = []

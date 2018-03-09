@@ -1,6 +1,7 @@
-import Piece, { PieceType, Position } from "./Piece";
+import Piece, { PieceType, Position, Color } from "./Piece";
 import { assertUnreachable } from "./helpers";
-import State from "./state";
+import State, { getPlayer } from "./state";
+import * as _ from "lodash";
 
 export function validMoves(piece: Piece, board: State): {x: number, y: number}[] {
   let result = []
@@ -125,4 +126,22 @@ export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
   }
 
   return false
+}
+
+export function playerCanMove(state: State): boolean {
+  const player = getPlayer(state)
+  if (!player) { return false }
+
+  const moves = validMoves(player, state)
+
+  const allPossibleEnemyMoves = _(state.pieces)
+    .filter((p) => p.color === Color.Black)
+    .map((p) => validMoves(p, state))
+    .flatten()
+    .uniq()
+    .value()
+
+  const nonLethalMoves = _.differenceWith(moves, allPossibleEnemyMoves, _.isEqual)
+
+  return nonLethalMoves.length > 0
 }
