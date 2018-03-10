@@ -23,7 +23,9 @@ export default interface Piece {
   pos: string
   x: number,
   y: number,
+
   destination?: Position
+  text?: string
 }
 
 /** The coordinate axis starts in the bottom-left.

@@ -6,6 +6,7 @@ import Piece, { Color, PieceType, xyToPos } from '../Piece';
 interface Props {
   size: number
   pieces: Piece[]
+  header?: string
 }
 
 interface DispatchProps {
@@ -13,7 +14,7 @@ interface DispatchProps {
 }
 
 export default (props: Props & DispatchProps) => {
-  const {size, pieces, onDrag} = props
+  const {size, pieces, onDrag, header} = props
 
   const piecesByTile = _.keyBy(pieces, 'pos')
 
@@ -25,9 +26,11 @@ export default (props: Props & DispatchProps) => {
       const piece = piecesByTile[pos]
       let pieceType: PieceType|undefined
       let pieceColor: Color|undefined
+      let text: string|undefined
       if (piece) {
         pieceType = piece.piece
         pieceColor = piece.color
+        text = piece.text
       }
 
       tiles.push(
@@ -40,6 +43,7 @@ export default (props: Props & DispatchProps) => {
           x={x}
           y={y}
           onDrag={onDrag}
+          text={text}
         />
       )
     }
@@ -47,6 +51,7 @@ export default (props: Props & DispatchProps) => {
   return (
     <div id='board'>
       {tiles}
+      {_.isString(header) && <h2 className='header'>{header}</h2>}
     </div>
   )
 }

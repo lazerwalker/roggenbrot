@@ -1,11 +1,11 @@
-import State from "./state";
-import { Action, ActionType, MoveAction } from "./action";
-import { Color } from './Piece';
-import calculateEnemyMove from "./calculateEnemyMove";
-import generateBoard from "./generateBoard";
-import move from "./move";
-import animationTick from "./animationTick";
-import skipAnimation from "./skipAnimation";
+import State from "../state";
+import { Action, ActionType, MoveAction } from "../action";
+import { Color } from '../Piece';
+import calculateEnemyMove from "../calculateEnemyMove";
+import generateBoard from "../generateBoard";
+import move from "../move";
+import animationTick from "../animationTick";
+import skipAnimation from "../skipAnimation";
 
 export default function(state: State, action: Action): State {
   switch (action.type) {

@@ -12,6 +12,7 @@ import {
 import { asciiFromPiece } from '../helpers';
 import { DragType } from '../constants';
 import { moveIsValid } from '../validMoves';
+import * as _ from 'lodash';
 
 interface Props {
   boardSize: number,
@@ -20,6 +21,7 @@ interface Props {
   pieceColor?: Color,
   x: number,
   y: number,
+  text?: string
   onDrag: (piece: Piece, pos: {x: number, y: number}) => void
 }
 
@@ -48,7 +50,7 @@ const renderOverlay = (color: string) => {
 }
 
 const TileView = (props: Props & DNDProps) => {
-  const {boardSize, pieceType, pieceColor, connectDragSource, connectDropTarget, canDrop, isOver} = props
+  const {boardSize, pieceType, pieceColor, connectDragSource, connectDropTarget, canDrop, isOver, text} = props
 
   // TODO: Would love if I could do this in pure CSS
   const percent = (1.0 / boardSize) * 100
@@ -68,6 +70,7 @@ const TileView = (props: Props & DNDProps) => {
       {isOver && !canDrop && renderOverlay('red')}
       {!isOver && canDrop && renderOverlay('yellow')}
       {isOver && canDrop && renderOverlay('green')}
+      {_.isString(text) && (<div className='label'>{text}</div>)}
     </div>
   )
 

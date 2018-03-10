@@ -2,35 +2,27 @@ import * as React from 'react';
 import './App.css';
 import Board from './components/BoardView';
 import { DragDropContext } from 'react-dnd';
-import State, { isAnimating } from './state';
+import State, { isAnimating, GameMode } from './state';
 import Piece from './Piece';
-import { moveAction, newGameAction, animationTickAction, skipAnimationAction } from './actionCreators';
+import { moveAction, animationTickAction, skipAnimationAction } from './actionCreators';
 
 import MultiBackend from 'react-dnd-multi-backend'
 // tslint:disable-next-line:no-submodule-imports
 import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'
 import { Action } from './action';
-import reducer from './reducer';
+import reducer from './reducers';
+
+import setUpMenu from './menu/setUpMode'
 
 class App extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props)
 
-    this.state = {
-      board: {
-        size: 5,
-        pieces: [],
-      },
-      score: 0,
-      turnCount: 0,
-      isNewRound: false,
-      animationSpeed: 300
-    }
-
     this.drag = this.drag.bind(this) // lol TS + React
 
-    setTimeout((() => this.dispatch(newGameAction())), 0)
+    this.state = setUpMenu()
   }
+
   drag(piece: Piece, pos: {x: number, y: number}) {
     this.dispatch(moveAction(piece, pos))
   }
@@ -55,6 +47,8 @@ class App extends React.Component<{}, State> {
       setTimeout(() => { alert("You have lost!") }, 0)
     }
 
+    const header = (this.state.mode === GameMode.Menu ? "capture the black king to start" : undefined)
+
     return (
       <div id='game'>
         <h1>Roggenbrot</h1>
@@ -64,6 +58,7 @@ class App extends React.Component<{}, State> {
           onDrag={this.drag}
           size={this.state.board.size}
           pieces={this.state.board.pieces}
+          header={header}
         />
         <div id="turns">
           <span>{this.state.turnCount}</span> moves

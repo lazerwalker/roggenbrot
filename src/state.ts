@@ -5,10 +5,16 @@ export default interface State {
   board: BoardState
   score: number
   turnCount: number
+  mode: GameMode
 
   isNewRound?: boolean
   animationSpeed: number // tick time in ms
   gameIsOver?: boolean
+}
+
+export enum GameMode {
+  Menu = "menu",
+  Game = "game"
 }
 
 export interface BoardState {
