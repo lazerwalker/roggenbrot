@@ -11,10 +11,11 @@ interface Props {
 
 interface DispatchProps {
   onDrag: (piece: Piece, pos: {x: number, y: number}) => void
+  onHeaderTap: () => void
 }
 
 export default (props: Props & DispatchProps) => {
-  const {size, pieces, onDrag, header} = props
+  const {size, pieces, onDrag, header, onHeaderTap} = props
 
   const piecesByTile = _.keyBy(pieces, 'pos')
 
@@ -51,7 +52,7 @@ export default (props: Props & DispatchProps) => {
   return (
     <div id='board'>
       {tiles}
-      {_.isString(header) && <h2 className='header'>{header}</h2>}
+      {_.isString(header) && <h2 className='header' onClick={onHeaderTap}>{header}</h2>}
     </div>
   )
 }

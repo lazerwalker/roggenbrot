@@ -11,7 +11,8 @@ export default function(state: State): State {
     mode: GameMode.Game,
 
     animationSpeed: 300,
-    isNewRound: false
+    isNewRound: false,
+    gameIsOver: false
   }
 
   return reducer(newState, newGameAction())

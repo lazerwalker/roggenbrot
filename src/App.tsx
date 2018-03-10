@@ -19,12 +19,17 @@ class App extends React.Component<{}, State> {
     super(props)
 
     this.drag = this.drag.bind(this) // lol TS + React
+    this.onHeaderTap = this.onHeaderTap.bind(this)
 
     this.state = setUpMenu()
   }
 
   drag(piece: Piece, pos: {x: number, y: number}) {
     this.dispatch(moveAction(piece, pos))
+  }
+
+  onHeaderTap() {
+    this.setState(setUpMenu())
   }
 
   dispatch(action: Action) {
@@ -42,12 +47,7 @@ class App extends React.Component<{}, State> {
   }
 
   render() {
-    // TODO: lol
-    if (this.state.gameIsOver) {
-      setTimeout(() => { alert("You have lost!") }, 0)
-    }
-
-    const header = (this.state.mode === GameMode.Menu ? "capture the black king to start" : undefined)
+    const header = calculateHeader(this.state)
 
     return (
       <div id='game'>
@@ -59,6 +59,7 @@ class App extends React.Component<{}, State> {
           size={this.state.board.size}
           pieces={this.state.board.pieces}
           header={header}
+          onHeaderTap={this.onHeaderTap}
         />
         <div id="turns">
           <span>{this.state.turnCount}</span> moves
@@ -69,6 +70,20 @@ class App extends React.Component<{}, State> {
       </div>
     );
   }
+}
+
+function calculateHeader(state: State): string|undefined {
+  if (state.mode === GameMode.Menu) {
+    return "capture the black king to start."
+  }
+
+  if (state.mode === GameMode.Game) {
+    if (state.gameIsOver) {
+      return "you lost. tap here to restart."
+    }
+  }
+
+  return undefined
 }
 
 export default DragDropContext(MultiBackend(HTML5toTouch))(App);

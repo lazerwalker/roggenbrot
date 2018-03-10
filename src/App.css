@@ -44,7 +44,7 @@ html, body, #root {
 #board .header {
   background: rgba(255, 255, 255, 0.8);
   position: absolute;
-  top: 0px;
+  top: 50px;
   margin: 0;
   text-align: center;
   line-height: 100px;
