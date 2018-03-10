@@ -1,9 +1,8 @@
 import State from "./state";
 
 export default function skipAnimation(state: State): State {
-  const newState = {...state}
-
-  newState.pieces = newState.pieces.map((p) => {
+  const newBoard = {...state.board}
+  newBoard.pieces = newBoard.pieces.map((p) => {
     if (p.destination) {
       p.x = p.destination.x
       p.y = p.destination.y
@@ -12,5 +11,5 @@ export default function skipAnimation(state: State): State {
     return p
   })
 
-  return newState
+  return {...state, board: newBoard}
 }

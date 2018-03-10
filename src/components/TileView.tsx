@@ -110,7 +110,8 @@ const tileTarget = {
     const fakeState = {
       size: props.boardSize,
       pieces: props.pieces,
-      animationSpeed: 200
+      animationSpeed: 200,
+      score: 0
     }
     return moveIsValid(item, pos, fakeState)
   },

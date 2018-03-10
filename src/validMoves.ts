@@ -1,9 +1,9 @@
 import Piece, { PieceType, Position, Color } from "./Piece";
 import { assertUnreachable } from "./helpers";
-import State, { getPlayer } from "./state";
+import { getPlayer, BoardState } from "./state";
 import * as _ from "lodash";
 
-export function validMoves(piece: Piece, board: State): {x: number, y: number}[] {
+export function validMoves(piece: Piece, board: BoardState): {x: number, y: number}[] {
   let result = []
   for (let y = board.size - 1; y >= 0; y--) {
     for (let x = 0; x < board.size; x++) {
@@ -16,7 +16,7 @@ export function validMoves(piece: Piece, board: State): {x: number, y: number}[]
   return result
 }
 
-export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
+export function moveIsValid(piece: Piece, to: Position, board: BoardState): boolean {
   const {x, y} = piece
 
   enum Square {
@@ -128,7 +128,7 @@ export function moveIsValid(piece: Piece, to: Position, board: State): boolean {
   return false
 }
 
-export function playerCanMove(state: State): boolean {
+export function playerCanMove(state: BoardState): boolean {
   const player = getPlayer(state)
   if (!player) { return false }
 

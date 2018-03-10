@@ -3,7 +3,9 @@ import { xyToPos, PieceType, Color } from "./Piece";
 
 export default function animationTick(state: State): State {
   const newState = {...state}
-  newState.pieces = newState.pieces.map((p) => {
+  const newBoard = {...newState.board}
+
+  newBoard.pieces = newBoard.pieces.map((p) => {
     if (p.destination) {
       let newX = p.x
       let newY = p.y
@@ -42,7 +44,7 @@ export default function animationTick(state: State): State {
       if (newX === p.x && newY === p.y) {
         delete newPiece.destination
 
-        const player = state.pieces.find((pl) => pl.x === newX && pl.y === newY && pl.color === Color.White)
+        const player = newBoard.pieces.find((pl) => pl.x === newX && pl.y === newY && pl.color === Color.White)
         if (player) {
           newState.gameIsOver = true
         }
@@ -55,8 +57,9 @@ export default function animationTick(state: State): State {
   })
 
   if (newState.gameIsOver) {
-    newState.pieces = newState.pieces.filter((p) => p.color === Color.Black)
+    newBoard.pieces = newBoard.pieces.filter((p) => p.color === Color.Black)
   }
 
+  newState.board = newBoard
   return newState
 }

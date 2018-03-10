@@ -17,9 +17,9 @@ export default function(state: State, action: Action): State {
 
       let newState = move(state, piece, to)
       if (!newState.isNewRound) {
-        for (var p of newState.pieces) {
+        for (var p of newState.board.pieces) {
           if (p.color === Color.White) { continue }
-          const destination = calculateEnemyMove(newState, p)
+          const destination = calculateEnemyMove(newState.board, p)
           if (destination) {
             p.destination = destination
           }

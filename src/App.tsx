@@ -17,8 +17,11 @@ class App extends React.Component<{}, State> {
     super(props)
 
     this.state = {
-      size: 5,
-      pieces: [],
+      board: {
+        size: 5,
+        pieces: [],
+      },
+      score: 0,
       isNewRound: false,
       animationSpeed: 300
     }
@@ -33,14 +36,14 @@ class App extends React.Component<{}, State> {
 
   dispatch(action: Action) {
     const newState = reducer(this.state, action)
-    if (newState.gameIsOver && isAnimating(newState)) {
+    if (newState.gameIsOver && isAnimating(newState.board)) {
       this.dispatch(skipAnimationAction())
       return
     }
 
     this.setState(newState)
 
-    if (isAnimating(newState)) {
+    if (isAnimating(newState.board)) {
       setTimeout(() => { this.dispatch(animationTickAction()) }, newState.animationSpeed)
     }
   }
@@ -54,8 +57,8 @@ class App extends React.Component<{}, State> {
     return (
       <Board
         onDrag={this.drag}
-        size={this.state.size}
-        pieces={this.state.pieces}
+        size={this.state.board.size}
+        pieces={this.state.board.pieces}
       />
     );
   }

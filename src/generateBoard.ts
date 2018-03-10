@@ -7,36 +7,37 @@ export default function generateBoard(state: State, triggerNewRound: boolean = t
   let newState = state
   do {
     newState = generateRawBoard(state, triggerNewRound)
-  } while (!playerCanMove(newState))
+  } while (!playerCanMove(newState.board))
 
   return newState
 }
 
 function generateRawBoard(state: State, triggerNewRound: boolean): State {
-  const {size} = state
+  const {size} = state.board
 
   const pieces = []
 
-  if (state.pieces.length > 0) {
-    const player = state.pieces.find((p) => p.color === Color.White)
+  if (state.board.pieces.length > 0) {
+    const player = state.board.pieces.find((p) => p.color === Color.White)
     if (player) {
       pieces.push(player)
     } else {
-      pieces.push(randomPiece(Color.White, state.size, []))
+      pieces.push(randomPiece(Color.White, size, []))
     }
   } else {
-    pieces.push(randomPiece(Color.White, state.size, []))
+    pieces.push(randomPiece(Color.White, size, []))
   }
 
-  pieces.push(randomPiece(Color.Black, state.size, pieces, true))
+  pieces.push(randomPiece(Color.Black, size, pieces, true))
   for (var i = 0; i < 4; i++) {
-    pieces.push(randomPiece(Color.Black, state.size, pieces))
+    pieces.push(randomPiece(Color.Black, size, pieces))
   }
+
+  const board = {size, pieces}
 
   return {
     ...state,
-    size,
-    pieces,
+    board,
     isNewRound: triggerNewRound
   }
 }

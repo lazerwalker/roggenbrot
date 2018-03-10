@@ -1,11 +1,11 @@
-import State, { getPlayer } from "./state";
+import { getPlayer, BoardState } from "./state";
 import Piece, { Position, PieceType } from "./Piece";
 import { validMoves } from "./validMoves";
 import * as _ from "lodash";
 
-type Strategy = (possibleMoves: Position[], player: Piece, board: State) => Position;
+type Strategy = (possibleMoves: Position[], player: Piece, board: BoardState) => Position;
 
-export default function calculateEnemyMove(state: State, enemy: Piece): Position|undefined {
+export default function calculateEnemyMove(state: BoardState, enemy: Piece): Position|undefined {
   const player = getPlayer(state)! // Really, TS? :/
   if (!player) { return }
 
