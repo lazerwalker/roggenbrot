@@ -6,7 +6,7 @@ import * as _ from "lodash";
 type Strategy = (possibleMoves: Position[], player: Piece, board: BoardState) => Position;
 
 export default function calculateEnemyMove(state: BoardState, enemy: Piece): Position|undefined {
-  const player = getPlayer(state)! // Really, TS? :/
+  const player = getPlayer(state)
   if (!player) { return }
 
   const strategyMap = {
