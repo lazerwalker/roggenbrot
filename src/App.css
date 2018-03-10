@@ -1,15 +1,16 @@
 .tile {
   /** Sizing happens in TileView */
-  background: #bbb;
-  font-size: 3em; /* TODO */
+  background: #eee;
+  color: #444;
+  font-size: 60px;
+  line-height: 100px;
   text-align: center;
   box-sizing: border-box;
   position: relative;
 }
 
 .tile:nth-child(odd) {
-  color: black;
-	background: white;
+	background: #ccc;
 }
 
 html, body, #root {
@@ -23,10 +24,27 @@ html, body, #root {
 }
 
 #board {
-  border: 1px solid black;
+  border: 1px solid #aaa;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   height: 100%;
   width: 100%;
+
+  margin: auto;
+
+  height: 500px;
+  width: 500px;
+}
+
+@media(max-width: 540px) {
+  #board {
+    height: 300px;
+    width: 300px;
+  }
+
+  .tile {
+    line-height: 60px;
+    font-size: 40px;
+  }
 }
