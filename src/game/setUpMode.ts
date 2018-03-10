@@ -2,12 +2,10 @@ import State, { GameMode } from '../state'
 import { newGameAction } from '../actionCreators';
 import reducer from './reducer';
 
-export default function(): State {
-  const state = {
-    board: {
-      size: 5,
-      pieces: [],
-    },
+export default function(state: State): State {
+  const newState = {
+    ...state,
+
     score: 0,
     turnCount: 0,
     mode: GameMode.Game,
@@ -16,5 +14,5 @@ export default function(): State {
     isNewRound: false
   }
 
-  return reducer(state, newGameAction())
+  return reducer(newState, newGameAction())
 }

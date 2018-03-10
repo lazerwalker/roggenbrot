@@ -1,4 +1,4 @@
-import State from "./state";
+import State, { getPlayer } from "./state";
 import { Color } from "./Piece";
 import randomPiece from "./randomPiece";
 import { playerCanMove } from "./validMoves";
@@ -18,7 +18,7 @@ function generateRawBoard(state: State, triggerNewRound: boolean): State {
   const pieces = []
 
   if (state.board.pieces.length > 0) {
-    const player = state.board.pieces.find((p) => p.color === Color.White)
+    const player = getPlayer(state.board)
     if (player) {
       pieces.push(player)
     } else {
