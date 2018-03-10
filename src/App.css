@@ -1,7 +1,6 @@
 .tile {
   /** Sizing happens in TileView */
   background: #eee;
-  color: #444;
   font-size: 60px;
   line-height: 100px;
   text-align: center;
@@ -30,15 +29,31 @@ html, body, #root {
   flex-wrap: wrap;
   height: 100%;
   width: 100%;
+}
 
-  margin: auto;
-
+#game {
+  color: #444;
   height: 500px;
   width: 500px;
+  margin: auto;
+}
+
+#score, #turns {
+  font-size: 18px;
+  font-family: Helvetica, Arial, sans-serif;
+  margin-top: 10px;
+}
+
+#score span, #turns span {
+  font-weight: bold;
+}
+
+#turns {
+  float: right;
 }
 
 @media(max-width: 540px) {
-  #board {
+  #board, #game {
     height: 300px;
     width: 300px;
   }

@@ -21,10 +21,28 @@ export default function move(state: State, piece: Piece, to: {x: number, y: numb
   newPieces.push(newPiece)
   const board = {...state.board, pieces: newPieces}
 
-  const newState = {...state, board}
+  const newState = {
+    ...state,
+    board,
+    turnCount: state.turnCount + 1
+  }
 
-  if (capturedPiece && newPiece.piece === PieceType.King) {
-    return generateBoard(newState)
+  if (capturedPiece) {
+    if (newPiece.piece === PieceType.King) {
+      let kingPoints = 5
+      if (state.turnCount > 5) {
+        kingPoints = Math.max(10 - state.turnCount, 1)
+      }
+
+      return {
+        ...generateBoard(newState),
+        score: newState.score + kingPoints
+      }
+    } else {
+      return {...newState,
+        score: newState.score + 1
+      }
+    }
   } else {
     return newState
   }

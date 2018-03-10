@@ -4,6 +4,8 @@ import * as _ from "lodash";
 export default interface State {
   board: BoardState
   score: number
+  turnCount: number
+
   isNewRound?: boolean
   animationSpeed: number // tick time in ms
   gameIsOver?: boolean

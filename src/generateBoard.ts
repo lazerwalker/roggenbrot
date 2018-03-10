@@ -38,6 +38,7 @@ function generateRawBoard(state: State, triggerNewRound: boolean): State {
   return {
     ...state,
     board,
+    turnCount: 0,
     isNewRound: triggerNewRound
   }
 }

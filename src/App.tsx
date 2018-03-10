@@ -22,6 +22,7 @@ class App extends React.Component<{}, State> {
         pieces: [],
       },
       score: 0,
+      turnCount: 0,
       isNewRound: false,
       animationSpeed: 300
     }
@@ -55,11 +56,19 @@ class App extends React.Component<{}, State> {
     }
 
     return (
-      <Board
-        onDrag={this.drag}
-        size={this.state.board.size}
-        pieces={this.state.board.pieces}
-      />
+      <div id='game'>
+        <Board
+          onDrag={this.drag}
+          size={this.state.board.size}
+          pieces={this.state.board.pieces}
+        />
+        <div id="turns">
+          Turns: <span>{this.state.turnCount}</span>
+        </div>
+        <div id="score">
+          Score: <span>{this.state.score}</span>
+        </div>
+      </div>
     );
   }
 }
