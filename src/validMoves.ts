@@ -132,7 +132,11 @@ export function playerCanMove(state: BoardState): boolean {
   const player = getPlayer(state)
   if (!player) { return false }
 
-  const moves = validMoves(player, state)
+  // TODO: This is why I'd love some tests around this
+  // (Was returning invalid boards because the only valid move was to stay still)
+  const moves = validMoves(player, state).filter((m) => {
+    return !(m.x === player.x && m.y === player.y)
+  })
 
   const allPossibleEnemyMoves = _(state.pieces)
     .filter((p) => p.color === Color.Black)
