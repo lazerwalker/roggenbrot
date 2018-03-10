@@ -64,8 +64,14 @@ const TileView = (props: Props & DNDProps) => {
     pieceChar = asciiFromPiece(pieceType, pieceColor)
   }
 
+  const classes = ['tile']
+  const isPlayer = (pieceColor === Color.White)
+  if (isPlayer) {
+    classes.push('player')
+  }
+
   let component = connectDropTarget(
-    <div className='tile' style={style}>
+    <div className={classes.join(" ")} style={style}>
       {pieceChar}
       {isOver && !canDrop && renderOverlay('red')}
       {!isOver && canDrop && renderOverlay('yellow')}
