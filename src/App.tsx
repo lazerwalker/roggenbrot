@@ -57,6 +57,9 @@ class App extends React.Component<{}, State> {
 
     return (
       <div id='game'>
+        <h1>Roggenbrot</h1>
+        <div className='subtitle'>
+          a <a href="#TODO:7drl">7drl</a> by <a href="https://lazerwalker.com">@lazerwalker</a></div>
         <Board
           onDrag={this.drag}
           size={this.state.board.size}

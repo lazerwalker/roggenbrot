@@ -52,6 +52,26 @@ html, body, #root {
   float: right;
 }
 
+.subtitle {
+  font-size: 12px;
+  margin-bottom: 1em;
+  margin-top: 4px;
+}
+
+.subtitle a {
+  color: #444;
+  text-decoration: none;
+}
+
+/** TODO: Re-enable if touch device */
+.subtitle a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  margin-bottom: 0;
+}
+
 @media(max-width: 540px) {
   #board, #game {
     height: 300px;
