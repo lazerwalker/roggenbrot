@@ -63,10 +63,10 @@ class App extends React.Component<{}, State> {
           pieces={this.state.board.pieces}
         />
         <div id="turns">
-          Turns: <span>{this.state.turnCount}</span>
+          <span>{this.state.turnCount}</span> moves
         </div>
         <div id="score">
-          Score: <span>{this.state.score}</span>
+          score: <span>{this.state.score}</span>
         </div>
       </div>
     );
