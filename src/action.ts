@@ -3,7 +3,8 @@ import Piece from "./Piece";
 export enum ActionType {
   Move = "MOVE",
   NewGame = "NEW_GAME",
-  AnimationTick = "ANIMATION_TICK"
+  AnimationTick = "ANIMATION_TICK",
+  SkipAnimation = "SKIP_ANIMATION"
 }
 
 export interface MoveAction {

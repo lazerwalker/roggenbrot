@@ -15,3 +15,7 @@ export function newGameAction(): Action {
 export function animationTickAction(): Action {
   return { type: ActionType.AnimationTick }
 }
+
+export function skipAnimationAction(): Action {
+  return { type: ActionType.SkipAnimation }
+}

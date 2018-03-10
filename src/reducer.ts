@@ -5,6 +5,7 @@ import calculateEnemyMove from "./calculateEnemyMove";
 import generateBoard from "./generateBoard";
 import move from "./move";
 import animationTick from "./animationTick";
+import skipAnimation from "./skipAnimation";
 
 export default function(state: State, action: Action): State {
   switch (action.type) {
@@ -32,6 +33,8 @@ export default function(state: State, action: Action): State {
       return generateBoard(state, false)
     case ActionType.AnimationTick:
       return animationTick(state)
+    case ActionType.SkipAnimation:
+      return skipAnimation(state)
     default:
       return state
   }
