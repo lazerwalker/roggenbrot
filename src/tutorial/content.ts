@@ -13,7 +13,7 @@ interface TutorialStep {
 
 export default [
   {
-    text: "you play as white",
+    text: "play as white",
     to: "c4",
     pieces: [
       {
