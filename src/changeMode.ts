@@ -2,6 +2,8 @@ import State, { GameMode } from "./state"
 
 import setUpGame from "./game/setUpMode"
 import setUpMenu from "./menu/setUpMode"
+import setUpTutorial from "./tutorial/setUpMode"
+
 import { assertUnreachable } from "./helpers";
 
 export default function changeMode(state: State, mode: GameMode): State {
@@ -10,6 +12,8 @@ export default function changeMode(state: State, mode: GameMode): State {
       return setUpGame(state)
     case GameMode.Menu:
       return setUpMenu()
+    case GameMode.Tutorial:
+      return setUpTutorial()
     default:
       assertUnreachable(mode)
       // lol, TS. Type safety means we'll never get here

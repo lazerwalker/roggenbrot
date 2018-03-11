@@ -19,10 +19,19 @@ export default function(): State {
     text: "new game"
   }
 
+  const tutorial = {
+    x: 4,
+    y: 2,
+    pos: "e3",
+    color: Color.Black,
+    piece: PieceType.Knight,
+    text: "how to play"
+  }
+
   return {
     board: {
       size: 5,
-      pieces: [player, newGame],
+      pieces: [player, newGame, tutorial],
     },
     score: 0,
     turnCount: 0,

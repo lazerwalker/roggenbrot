@@ -12,7 +12,10 @@ import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'
 import { Action } from './action';
 import reducer from './reducers';
 
+import TutorialContent from './tutorial/content'
 import setUpMenu from './menu/setUpMode'
+import * as _ from 'lodash';
+import allowedMoveTiles from './allowedMoveTiles';
 
 class App extends React.Component<{}, State> {
   constructor(props: {}) {
@@ -33,6 +36,7 @@ class App extends React.Component<{}, State> {
   }
 
   dispatch(action: Action) {
+    console.log("Moving?", action)
     const newState = reducer(this.state, action)
     if (newState.gameIsOver && isAnimating(newState.board)) {
       this.dispatch(skipAnimationAction())
@@ -48,6 +52,9 @@ class App extends React.Component<{}, State> {
 
   render() {
     const header = calculateHeader(this.state)
+    const {board} = this.state
+
+    const allowedDropPositions = allowedMoveTiles(this.state)
 
     return (
       <div id='game'>
@@ -56,10 +63,11 @@ class App extends React.Component<{}, State> {
           a <a href="#TODO:7drl">7drl</a> by <a href="https://lazerwalker.com">@lazerwalker</a></div>
         <Board
           onDrag={this.drag}
-          size={this.state.board.size}
-          pieces={this.state.board.pieces}
+          size={board.size}
+          pieces={board.pieces}
           header={header}
           onHeaderTap={this.onHeaderTap}
+          allowedDropPositions={allowedDropPositions}
         />
         <div id="turns">
           <span>{this.state.turnCount}</span> moves
@@ -74,12 +82,18 @@ class App extends React.Component<{}, State> {
 
 function calculateHeader(state: State): string|undefined {
   if (state.mode === GameMode.Menu) {
-    return "capture the black king to start."
+    return "capture a piece to start."
   }
 
   if (state.mode === GameMode.Game) {
     if (state.gameIsOver) {
       return "you lost. tap here to restart."
+    }
+  }
+
+  if (state.mode === GameMode.Tutorial) {
+    if (!_.isUndefined(state.tutorialStep)) {
+      return TutorialContent[state.tutorialStep].text
     }
   }
 

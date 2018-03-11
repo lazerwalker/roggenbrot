@@ -10,11 +10,13 @@ export default interface State {
   isNewRound?: boolean
   animationSpeed: number // tick time in ms
   gameIsOver?: boolean
+  tutorialStep?: number
 }
 
 export enum GameMode {
   Menu = "menu",
-  Game = "game"
+  Game = "game",
+  Tutorial = "tutorial"
 }
 
 export interface BoardState {

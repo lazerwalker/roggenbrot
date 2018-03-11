@@ -25,8 +25,12 @@ export default function(state: State, action: Action): State {
     pieces.push(newPiece)
     const newState = {...state, board: {...state.board, pieces}}
 
-    if (capturedPiece && capturedPiece.piece === PieceType.King) {
+    if (capturedPiece) {
+      if (capturedPiece.piece === PieceType.King) {
         return changeMode(newState, GameMode.Game)
+      } else if (capturedPiece.piece === PieceType.Knight) {
+        return changeMode(newState, GameMode.Tutorial)
+      }
     }
 
     return newState

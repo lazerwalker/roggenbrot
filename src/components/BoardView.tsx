@@ -7,6 +7,7 @@ interface Props {
   size: number
   pieces: Piece[]
   header?: string
+  allowedDropPositions?: string[]
 }
 
 interface DispatchProps {
@@ -15,7 +16,7 @@ interface DispatchProps {
 }
 
 export default (props: Props & DispatchProps) => {
-  const {size, pieces, onDrag, header, onHeaderTap} = props
+  const {size, pieces, onDrag, header, onHeaderTap, allowedDropPositions} = props
 
   const piecesByTile = _.keyBy(pieces, 'pos')
 
@@ -28,10 +29,16 @@ export default (props: Props & DispatchProps) => {
       let pieceType: PieceType|undefined
       let pieceColor: Color|undefined
       let text: string|undefined
+      let canDrop: boolean|undefined
+
       if (piece) {
         pieceType = piece.piece
         pieceColor = piece.color
         text = piece.text
+      }
+
+      if (allowedDropPositions) {
+        canDrop = _.includes(allowedDropPositions, pos)
       }
 
       tiles.push(
@@ -45,6 +52,7 @@ export default (props: Props & DispatchProps) => {
           y={y}
           onDrag={onDrag}
           text={text}
+          overrideCanDrop={canDrop}
         />
       )
     }

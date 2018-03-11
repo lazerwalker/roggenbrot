@@ -23,6 +23,7 @@ interface Props {
   y: number,
   text?: string
   onDrag: (piece: Piece, pos: {x: number, y: number}) => void
+  overrideCanDrop?: boolean
 }
 
 interface DNDProps {
@@ -113,6 +114,10 @@ const pieceSource = {
 
 const tileTarget = {
   canDrop(props: Props, monitor: DropTargetMonitor) {
+    if (!_.isUndefined(props.overrideCanDrop)) {
+      return props.overrideCanDrop
+    }
+
     const item = monitor.getItem() as Piece
     const pos = {x: props.x, y: props.y}
     // TODO: lol
