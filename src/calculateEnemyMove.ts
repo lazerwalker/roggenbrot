@@ -2,6 +2,7 @@ import { getPlayer, BoardState } from "./state";
 import Piece, { Position, PieceType } from "./Piece";
 import { validMoves } from "./validMoves";
 import * as _ from "lodash";
+import { sample } from "./random";
 
 type Strategy = (possibleMoves: Position[], player: Piece, board: BoardState) => Position;
 
@@ -36,7 +37,7 @@ function winningMove(possibleMoves: Position[], player: Piece): Position|undefin
 }
 
 function randomMove(possibleMoves: Position[], player: Piece): Position {
-  return _.sample(possibleMoves)!
+  return sample(possibleMoves)!
 }
 
 function nearestToPlayer(possibleMoves: Position[], player: Piece): Position {

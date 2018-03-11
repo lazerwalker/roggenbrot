@@ -7,6 +7,8 @@ export default interface State {
   turnCount: number
   mode: GameMode
 
+  rngSeed?: string
+
   isNewRound?: boolean
   animationSpeed: number // tick time in ms
   gameIsOver?: boolean

@@ -12,6 +12,6 @@ export default function(): State {
     mode: GameMode.Tutorial,
 
     tutorialStep: 0,
-    animationSpeed: 300
+    animationSpeed: 300,
   }
 }

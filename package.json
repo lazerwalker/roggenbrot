@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://lazerwalker.com/roggenbrot",
   "dependencies": {
+    "@types/seedrandom": "^2.4.27",
     "gh-pages": "^1.1.0",
     "lodash": "^4.17.5",
     "react": "^16.2.0",

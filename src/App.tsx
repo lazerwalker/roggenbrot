@@ -13,18 +13,29 @@ import { Action } from './action';
 import reducer from './reducers';
 
 import TutorialContent from './tutorial/content'
-import setUpMenu from './menu/setUpMode'
 import * as _ from 'lodash';
 import allowedMoveTiles from './allowedMoveTiles';
 
-class App extends React.Component<{}, State> {
-  constructor(props: {}) {
+import setUpMenu from './menu/setUpMode'
+import setUpGame from './game/setUpMode'
+
+interface Props {
+  seed?: string
+}
+
+class App extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props)
 
     this.drag = this.drag.bind(this) // lol TS + React
     this.onHeaderTap = this.onHeaderTap.bind(this)
 
-    this.state = setUpMenu()
+    if (props.seed) {
+      this.state = setUpGame(undefined, props.seed)
+    } else {
+      this.state = setUpMenu()
+    }
+
   }
 
   drag(piece: Piece, pos: {x: number, y: number}) {
