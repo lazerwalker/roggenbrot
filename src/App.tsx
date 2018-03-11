@@ -47,7 +47,6 @@ class App extends React.Component<Props, State> {
   }
 
   dispatch(action: Action) {
-    console.log("Moving?", action)
     const newState = reducer(this.state, action)
     if (newState.gameIsOver && isAnimating(newState.board)) {
       this.dispatch(skipAnimationAction())
