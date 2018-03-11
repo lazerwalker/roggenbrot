@@ -4,7 +4,7 @@ import Board from './components/BoardView';
 import { DragDropContext } from 'react-dnd';
 import State, { isAnimating, GameMode } from './state';
 import Piece from './Piece';
-import { moveAction, animationTickAction, skipAnimationAction } from './actionCreators';
+import { moveAction, animationTickAction } from './actionCreators';
 
 import MultiBackend from 'react-dnd-multi-backend'
 // tslint:disable-next-line:no-submodule-imports
@@ -48,11 +48,6 @@ class App extends React.Component<Props, State> {
 
   dispatch(action: Action) {
     const newState = reducer(this.state, action)
-    if (newState.gameIsOver && isAnimating(newState.board)) {
-      this.dispatch(skipAnimationAction())
-      return
-    }
-
     this.setState(newState)
 
     if (isAnimating(newState.board)) {
